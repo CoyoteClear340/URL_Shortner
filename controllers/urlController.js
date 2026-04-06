@@ -52,6 +52,37 @@ const shortenUrl = async (req, res) => {
   }
 };
 
+/**
+ * @desc    Find a URL by its short code and redirect the user.
+ * @route   GET /:code
+ * @access  Public
+ */
+const redirectToUrl = async (req, res) => {
+  //Find the URL documnet  in DB that has a 'urlCode'
+  try{
+    const url = await Url.findOne({ urlCode: req.params.code });
+
+    if(url){
+      // if found url send back response
+      url.clicks++;
+      await url.save(); // as we are updating the DB request its an async fxn hence await
+      return res.redirect(301,url.longUrl)
+    }
+    else{
+      return res.status(404).json({success: false, error:'No URL found'})
+    }
+  }catch(err){
+    console.error('Server error on redirection ,',err)
+
+    res.status(500).json({success: false,error:'Internal Server Errror'})
+  }
+  
+
+  
+};
+
+
 module.exports = {
   shortenUrl,
+  redirectToUrl,
 };
