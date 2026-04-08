@@ -69,15 +69,13 @@ const redirectToUrl = async (req, res) => {
       return res.redirect(301,url.longUrl)
     }
     else{
-      return res.status(404).json({success: false, error:'No URL found'})
+      return res.status(404).json({ success: false, error: 'No URL found' });
     }
   }catch(err){
     console.error('Server error on redirection ,',err)
 
     res.status(500).json({success: false,error:'Internal Server Errror'})
   }
-  
-
   
 };
 

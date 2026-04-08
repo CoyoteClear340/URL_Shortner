@@ -22,6 +22,10 @@ app.use(express.json());
 const urlRoutes = require('./routes/urls');
 app.use('/api', urlRoutes);
 
+const authRoutes = require('./routes/auth');
+app.use('/api/auth', authRoutes);
+
+
 
 // 2. Mount the index/redirect routes second.
 // Any other GET request will be potentially handled by this router.
